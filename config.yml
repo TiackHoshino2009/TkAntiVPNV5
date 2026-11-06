@@ -1,0 +1,85 @@
+# TkAntiVPN V5 - multi-service detection
+# Default action: KICK. Automatic BAN is disabled.
+# Cracked By Tiack2009, don't buy that shit AntiVPN Skid Btw
+debug: false
+
+cache:
+  enabled: true
+  hours: 24
+
+connection:
+  maximum-per-ip: 3
+  window-seconds: 60
+
+detection:
+  # SAFE mode requires at least one explicit anonymizer signal.
+  safe-mode: true
+  kick-threshold: 75
+  suspicious-threshold: 45
+  second-check-before-kick: true
+  # Do not treat datacenter/hosting alone as VPN.
+  require-explicit-anonymizer: true
+  weights:
+    vpn: 90
+    proxy: 85
+    tor: 100
+    datacenter: 25
+    hosting: 25
+    shared-ip: 15
+    risk: 20
+    geo-jump: 10
+
+actions:
+  kick:
+    enabled: true
+    message: "&c&lTkAntiVPN\n&7VPN/Proxy/Tor không được phép trên server."
+  ban:
+    enabled: false
+  notify:
+    enabled: true
+    message: "&c&lTkAntiVPN &7%player% &8→ &f%reason% &8[&c%score%&8]"
+  discord:
+    enabled: false
+    webhook: ""
+    username: "TkAntiVPN"
+    alert-message: "🚨 TkAntiVPN phát hiện kết nối đáng ngờ\nPlayer: **%player%**\nIP: `%ip%`\nCountry: `%country%`\nISP: `%isp%`\nOrg: `%org%`\nScore: **%score%/100**\nServices: **%flagged%/%services%**\nReason: `%reason%`\nAction: **KICK**"
+
+services:
+  # Free/no-key geolocation + proxy/hosting signal.
+  ip-api:
+    enabled: true
+    url: "http://ip-api.com/json/%ip%?fields=status,message,country,countryCode,isp,org,as,proxy,hosting"
+  # Strong public VPN/proxy database. Free tier may be rate-limited.
+  proxycheck:
+    enabled: true
+    key: ""
+    url: "https://proxycheck.io/v2/%ip%?vpn=1&risk=1&asn=1&key=%key%"
+  # VPN/proxy/Tor service. Free tier may be rate-limited.
+  vpnapi:
+    enabled: true
+    key: ""
+    url: "https://vpnapi.io/api/%ip%?key=%key%"
+  iphub:
+    enabled: false
+    key: ""
+    url: "https://v2.api.iphub.info/ip/%ip%"
+  getipintel:
+    enabled: false
+    email: ""
+    url: "https://check.getipintel.net/check.php?ip=%ip%&contact=%email%&format=json"
+  iphunter:
+    enabled: false
+    key: ""
+    url: "https://www.iphunter.info:8082/v1/ip/%ip%?API_KEY=%key%"
+  ipqualityscore:
+    enabled: false
+    key: ""
+    url: "https://ipqualityscore.com/api/json/ip/%key%/%ip%"
+
+blacklist:
+  ips: []
+  players: []
+
+whitelist:
+  ips: []
+  players: []

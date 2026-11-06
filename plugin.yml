@@ -1,0 +1,18 @@
+name: TkAntiVPN
+version: 5.0.0
+main: net.tka.antivpn.TkAntiVPN
+api-version: '1.21'
+author: Tiack and TK
+description: Multi-service VPN, proxy, Tor and datacenter protection
+commands:
+  antivpn:
+    description: TkAntiVPN administration
+    usage: /antivpn help
+    permission: antivpn.admin
+permissions:
+  antivpn.admin:
+    default: op
+  antivpn.notify:
+    default: op
+  antivpn.bypass:
+    default: false
