@@ -1,6 +1,5 @@
 # TkAntiVPN V5 - multi-service detection
 # Default action: KICK. Automatic BAN is disabled.
-# Cracked By Tiack2009, don't buy that shit AntiVPN Skid Btw
 debug: false
 
 cache:
